@@ -1,0 +1,39 @@
+1. Collecte et Préparation des Données (Le "Knowledge Base")
+
+C'est l'étape la plus cruciale. Un assistant n'est bon que si ses sources sont fiables.
+
+    Recueil : Rassemble tous les PDF, fichiers texte ou liens web concernant le règlement intérieur, les fiches de scolarité, etc.
+
+    Nettoyage : Supprime les éléments inutiles (numéros de page, en-têtes répétitifs) pour ne garder que le texte pur.
+
+2. Ingestion et Segmentation (Chunking)
+
+Un LLM ne peut pas lire un règlement de 50 pages d'un coup.
+
+    Découpage : Divise tes documents en petits morceaux (ex: des blocs de 500 à 1000 caractères).
+
+    Chevauchement (Overlap) : Garde un petit morceau du bloc précédent dans le suivant pour ne pas perdre le contexte entre deux paragraphes.
+
+3. Création des Embeddings et Stockage Vectoriel
+
+C'est là que l'IA "comprend" le sens des mots.
+
+    Embedding : Utilise un modèle (comme text-embedding-3-small d'OpenAI ou un modèle HuggingFace gratuit) pour transformer chaque bloc de texte en un vecteur numérique.
+
+    Base de données vectorielle : Stocke ces vecteurs dans une base spécialisée comme ChromaDB (local et gratuit), Pinecone ou FAISS.
+
+4. Développement de la Logique de Récupération (Retrieval)
+
+Quand l'étudiant pose une question :
+
+    La question est transformée en vecteur (embedding).
+
+    Le système cherche dans la base vectorielle les 3 ou 5 blocs de texte les plus "proches" sémantiquement de la question.
+
+5. Génération de la Réponse (Augmentation)
+
+    Le Prompt : Tu envoies au LLM (GPT-3.5/4, Gemini ou Mistral) un message du type :
+
+        "Tu es l'assistant officiel de 2iE. Voici des extraits du règlement intérieur : [Extraits récupérés]. En te basant uniquement sur ces infos, réponds à la question suivante : [Question de l'étudiant]."
+
+    Réponse : Le LLM génère une réponse naturelle basée sur tes documents.
