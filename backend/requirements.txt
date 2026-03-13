@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+langchain-huggingface
+langchain-chroma
+langchain-groq
+langchain-classic
+langchain-community
+langchain-text-splitters
+pymupdf4llm
+sentence-transformers
+rank_bm25

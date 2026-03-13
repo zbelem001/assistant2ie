@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: assistant-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      # Permet de synchroniser les dossiers sans avoir à rebuild si on ajoute des PDFs
+      - ./backend/docs:/app/docs
+      - ./backend/chroma_db:/app/chroma_db
+
+  frontend:
+    build:
+      context: ./frontvector
+    container_name: assistant-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
